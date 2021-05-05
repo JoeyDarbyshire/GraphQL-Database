@@ -1,10 +1,17 @@
 const { ApolloServer, gql } = require('apollo-server');
-const { resolvers } = require('./server/resolvers');
-const { typeDefs } = require('./server/typeDefs')
+const resolvers = require('./server/resolvers');
+const typeDefs = require('./server/schema')
+const models = require('./server/models')
 
 
 // Apollo Server
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ 
+    typeDefs, 
+    resolvers,
+    context: {
+        models
+    }
+ });
 
 // Server start
 server.listen().then(({ url }) => {
